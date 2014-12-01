@@ -3,7 +3,7 @@
 /**
  * Gets a list of valid dictionary words of a given length.
  * @param wordLength {number}
- * @return {array} list of words
+ * @return {array} list of words.
  */
 function getDictionary(wordLength) {
     // load words (copied from /usr/share/dict/words)
@@ -37,36 +37,36 @@ function replayPath(wordTree, endWord) {
 }
 
 /**
- * Find the path between 2 words
- * @param startWord {string} the word to start from
- * @param endWord {string} the word to end on
- * @return {array} sequence of word transforms
+ * Find the path between 2 words.
+ * @param startWord {string} the word to start from.
+ * @param endWord {string} the word to end on.
+ * @return {array} sequence of word transforms.
  */
 function findPath(startWord, endWord) {
     var wordQueue = [],
         wordTree = {}, // currentWord: parentWord
-        wordList = getDictionary(startWord.length);
+        wordPool = getDictionary(startWord.length);
     try {
         while (startWord) {
             console.log('node count: ' + Object.keys(wordTree).length + ', queue size: ' + wordQueue.length);
             // scan word list for matches and remove them from the pool.
-            wordList = wordList.filter(function (word) {
+            wordPool = wordPool.filter(function (word) {
                 var i, reg;
                 // for each letter
                 for (i = 0; i < startWord.length; i++) {
                     // create matching expression
                     reg = new RegExp('^' + startWord.slice(0, i) + '[a-z]{1}' + startWord.slice(i + 1) + '$');
                     if (reg.test(word)) {
-                        // if word matches add to wordTree
+                        // if word matches, add it to the wordTree
                         wordTree[word] = startWord;
                         if (word === endWord) {
-                            // if the end word found then exit
+                            // if the end word is found, then exit (by throwing)
                             throw wordTree;
                         } else {
                             // push matching word onto the queue
                             wordQueue.push(word);
                         }
-                        // remove word from wordList
+                        // remove word from wordPool
                         return false;
                     }
                 }
@@ -77,7 +77,11 @@ function findPath(startWord, endWord) {
         }
     } catch (err) {
         if (err === wordTree) {
+            // catch path found, then return path
             return replayPath(wordTree, endWord);
+        } else {
+            // propagate any other errors
+            throw err;
         }
     }
 }
