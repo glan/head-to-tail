@@ -18,6 +18,6 @@ node main.js head tail
 
 ## Implementation
 
-Builds a word tree with the first word as the root node. Each level of the tree represents a single letter mutation from the parent node. Words are only used once and are removed from the word pool once they are placed in the tree. As the tree is constructed we perform a breadth-first search for the end word. This is done by removing nodes from a queue which is pushed to as the tree is constructed.
+Builds a word tree with the first word as the root node. Each level of the tree represents a single letter mutation from the parent node. Words are only used once and are removed from the word pool once they are placed into the tree. As the tree is constructed we perform a breadth-first search for the end word. This is done by removing nodes from a queue which is pushed to as the tree is constructed.
 
 The valid word dictionary is sourced from `/usr/share/dict/words`.
