@@ -6,9 +6,8 @@
  * @return {array} list of words
  */
 function getDictionary(wordLength) {
-    var fs = require('fs');
-    // load words from /usr/share/dict/words
-    var words = fs.readFileSync('/usr/share/dict/words').toString().split('\n');
+    // load words (copied from /usr/share/dict/words)
+    var words = require('./words');
 
     // filter word list so it only contains words of the required length
     return words.filter(function (word) {
